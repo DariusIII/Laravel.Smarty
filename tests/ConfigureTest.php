@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 class ConfigureTest extends SmartyTestCase
 {
     protected function setUp(): void
@@ -7,15 +9,15 @@ class ConfigureTest extends SmartyTestCase
         parent::setUp();
         $filesystem = new \Illuminate\Filesystem\Filesystem;
 
-        $items = $filesystem->getRequire(__DIR__ . '/config/config.php');
+        $items = $filesystem->getRequire(__DIR__.'/config/config.php');
         $this->config->set('ytake-laravel-smarty', $items);
     }
 
     public function testHasConfigure(): void
     {
-        $this->assertInternalType('array', $this->config->all());
+        $this->assertIsArray($this->config->all());
         $config = $this->config->get('ytake-laravel-smarty');
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
         $this->assertArrayHasKey('extension', $config);
         $this->assertArrayHasKey('debugging', $config);
         $this->assertArrayHasKey('caching', $config);

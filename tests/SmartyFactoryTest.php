@@ -1,31 +1,31 @@
 <?php
 
-class SmartyManagerFactory extends SmartyTestCase
+namespace Tests;
+
+class SmartyFactoryTest extends SmartyTestCase
 {
     public function testInstance(): void
     {
-        $this->assertInstanceOf("Ytake\\LaravelSmarty\\SmartyFactory", $this->factory);
+        $this->assertInstanceOf('Ytake\\LaravelSmarty\\SmartyFactory', $this->factory);
     }
 
     public function testSmarty(): void
     {
-        $this->assertInstanceOf("Smarty", $this->factory->getSmarty());
+        $this->assertInstanceOf('Smarty', $this->factory->getSmarty());
         $this->assertNotTrue($this->factory->getVersion());
     }
 
     public function testConfigure(): void
     {
         $smarty = $this->factory->getSmarty();
-        foreach($smarty->getTemplateDir() as $dir) {
+        foreach ($smarty->getTemplateDir() as $dir) {
             $this->assertSame(true, file_exists($dir));
         }
     }
 
-    /**
-     * @expectedException \Ytake\LaravelSmarty\Exception\MethodNotFoundException
-     */
     public function testUndefinedFunction(): void
     {
+        $this->expectException(\Ytake\LaravelSmarty\Exception\MethodNotFoundException::class);
         $this->factory->hello();
         $this->factory->assing();
         $this->factory->smarty([1 => 2]);
@@ -45,29 +45,17 @@ class SmartyManagerFactory extends SmartyTestCase
         $this->assertSame(0, count($this->scan()));
     }
 
-    /**
-     * @param $class
-     * @param $name
-     * @return \ReflectionMethod
-     */
-    protected function getProtectMethod($class, $name)
-    {
-        $class = new \ReflectionClass($class);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-        return $method;
-    }
-
     public function scan()
     {
         $files = [];
-        $dir = opendir(__DIR__ . '/storage/smarty/compile');
-        while($file = readdir($dir)) {
-            if($file != '.' && $file != '..' && $file != '.gitignore') {
+        $dir = opendir(__DIR__.'/storage/smarty/compile');
+        while ($file = readdir($dir)) {
+            if ($file != '.' && $file != '..' && $file != '.gitignore') {
                 $files[] = $file;
             }
         }
         closedir($dir);
+
         return $files;
     }
 }

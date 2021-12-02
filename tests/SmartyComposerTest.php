@@ -1,7 +1,9 @@
 <?php
 
+namespace Tests;
+
 /**
- * Class SmartyComposerTest
+ * Class SmartyComposerTest.
  */
 class SmartyComposerTest extends SmartyTestCase
 {
@@ -10,7 +12,7 @@ class SmartyComposerTest extends SmartyTestCase
         $this->factory->composer('include', function (\Illuminate\View\View $view) {
             $view->with('value', 'dispatch view composer');
         });
-        $this->assertContains('dispatch view composer', $this->factory->make('include_test')->render());
+        $this->assertStringContainsString('dispatch view composer', $this->factory->make('include_test')->render());
     }
 
     public function testShouldDispatchViewComposerCaseOnceCompile(): void
@@ -24,10 +26,9 @@ class SmartyComposerTest extends SmartyTestCase
             $view->with('creator', 'dispatch view creator');
         });
         $view = $this->factory->make('include_test')->render();
-        $this->assertContains('dispatch view composer', $view);
-        $this->assertContains('dispatch view creator', $view);
+        $this->assertStringContainsString('dispatch view composer', $view);
+        $this->assertStringContainsString('dispatch view creator', $view);
     }
-
 
     public function tearDown(): void
     {
