@@ -28,10 +28,10 @@ use Illuminate\Contracts\View\Factory;
  * @author  yuuki.takezawa<yuuki.takezawa@comnect.jp.net>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class Smarty extends \Smarty
+final class Smarty extends \Smarty\Smarty
 {
     /** @var Factory */
-    protected Factory $viewFactory;
+    private Factory $viewFactory;
 
     /**
      * @param Factory $factory

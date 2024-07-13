@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace Ytake\LaravelSmarty\Cache;
 
-use Smarty_CacheResource_KeyValueStore;
+use Smarty\Cacheresource\KeyValueStore;
 
 use function sha1;
 
@@ -30,7 +30,7 @@ use function sha1;
  * @author  yuuki.takezawa<yuuki.takezawa@comnect.jp.net>
  * @license http://opensource.org/licenses/MIT MIT
  */
-abstract class KeyValueStorage extends Smarty_CacheResource_KeyValueStore
+abstract class KeyValueStorage extends KeyValueStore
 {
     /**
      * @param array $keys

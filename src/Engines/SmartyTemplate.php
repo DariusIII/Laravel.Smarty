@@ -21,8 +21,7 @@ declare(strict_types=1);
 namespace Ytake\LaravelSmarty\Engines;
 
 use Illuminate\View\View;
-use Smarty_Internal_Template;
-use Smarty_Resource;
+use Smarty\Template;
 use Ytake\LaravelSmarty\Smarty;
 use Ytake\LaravelSmarty\SmartyFactory;
 
@@ -34,13 +33,14 @@ use function str_replace;
  * @author  yuuki.takezawa <yuuki.takezawa@comnect.jp.net>
  * @license http://opensource.org/licenses/MIT MIT
  */
-class SmartyTemplate extends Smarty_Internal_Template
+class SmartyTemplate extends Template
 {
     /** @var string|null  */
     private ?string $templateResourceName = null;
 
     /**
      * {@inheritdoc}
+     * @throws \Smarty\Exception
      */
     public function _subTemplateRender(
         $template,
@@ -55,7 +55,7 @@ class SmartyTemplate extends Smarty_Internal_Template
         $content_func = null
     ): void {
         $this->templateResourceName = $template;
-        parent::_subTemplateRender(
+        $this->renderSubTemplate(
             $template,
             $cache_id,
             $compile_id,
@@ -71,20 +71,21 @@ class SmartyTemplate extends Smarty_Internal_Template
 
     /**
      * {@inheritdoc}
+     * @throws \Smarty\Exception
      */
     public function _subTemplateRegister(): void
     {
-        foreach ($this->compiled->includes as $name => $count) {
+        foreach ($this->getCompiled()->includes as $name => $count) {
             // @codeCoverageIgnoreStart
-            if (isset($this->smarty->_cache['subTplInfo'][$name])) {
-                $this->smarty->_cache['subTplInfo'][$name] += $count;
+            if (isset($this->smarty->getCached()['subTplInfo'][$name])) {
+                $this->smarty->getCached()['subTplInfo'][$name] += $count;
             } else {
-                $this->smarty->_cache['subTplInfo'][$name] = $count;
+                $this->smarty->getCached()['subTplInfo'][$name] = $count;
             }
             // @codeCoverageIgnoreEnd
         }
         if ($this->templateResourceName) {
-            $parseResourceName = Smarty_Resource::parseResourceName(
+            $parseResourceName = $this->smarty->addTemplateDir(
                 $this->templateResourceName,
                 $this->smarty->default_resource_type
             );
@@ -93,11 +94,11 @@ class SmartyTemplate extends Smarty_Internal_Template
     }
 
     /**
-     * @param Smarty_Internal_Template $template
+     * @param Template $template
      * @param string $name
      */
     protected function dispatch(
-        Smarty_Internal_Template $template,
+        Template $template,
         string $name
     ): void {
         /** @var SmartyFactory $viewFactory */
@@ -107,7 +108,7 @@ class SmartyTemplate extends Smarty_Internal_Template
             $viewFactory,
             $viewFactory->getEngineResolver()->resolve('smarty'),
             $name,
-            $template->source->filepath,
+            $template->getSource()->getFilepath(),
             []
         );
         $viewFactory->callCreator($view);
@@ -128,8 +129,6 @@ class SmartyTemplate extends Smarty_Internal_Template
         string $name,
         SmartyFactory $viewFactory
     ): array|string {
-        $name = str_replace('.' . $viewFactory->getSmartyFileExtension(), '', $name);
-
-        return str_replace('/', '.', $name);
+	    return str_replace(['.'.$viewFactory->getSmartyFileExtension(), '/'], ['', '.'], $name);
     }
 }

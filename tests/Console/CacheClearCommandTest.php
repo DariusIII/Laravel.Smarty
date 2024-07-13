@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Console;
 
 use DirectoryIterator;
-use SmartyException;
+use Smarty\Exception;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\MockApplication;

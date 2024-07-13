@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Smarty\Exception;
+
 class SmartyEngineTest extends SmartyTestCase
 {
     /** @var \Ytake\LaravelSmarty\Engines\SmartyEngine */
@@ -28,7 +30,7 @@ class SmartyEngineTest extends SmartyTestCase
 
     public function testException(): void
     {
-        $this->expectException(\SmartyException::class);
+        $this->expectException(Exception::class);
         $this->engine->get('testing.tpl');
     }
 }

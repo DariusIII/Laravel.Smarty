@@ -6,7 +6,7 @@ namespace Tests\Cache;
 
 use Illuminate\View\View;
 use ReflectionException;
-use SmartyException;
+use Smarty\Exception;
 use Tests\SmartyTestCase;
 use Throwable;
 use Ytake\LaravelSmarty\Cache\Memcached;
@@ -52,7 +52,7 @@ final class StorageTest extends SmartyTestCase
     }
 
     /**
-     * @throws SmartyException
+     * @throws \Smarty\Exception
      * @throws Throwable
      */
     public function testCacheableTemplate(): void

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use SmartyException;
+use Smarty\Exception;
 use Ytake\LaravelSmarty\Engines\SmartyEngine;
 use Ytake\LaravelSmarty\Smarty;
 use Ytake\LaravelSmarty\SmartyFactory;

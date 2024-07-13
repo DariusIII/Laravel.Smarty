@@ -27,7 +27,7 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory;
 use Illuminate\View\ViewFinderInterface;
 use ReflectionClass;
-use SmartyException;
+use Smarty\Exception;
 use Ytake\LaravelSmarty\Cache\Storage;
 use Ytake\LaravelSmarty\Engines\SmartyTemplate;
 use Ytake\LaravelSmarty\Exception\MethodNotFoundException;
@@ -191,7 +191,7 @@ class SmartyFactory extends Factory
     /**
      * smarty configure
      *
-     * @throws SmartyException
+     * @throws \Smarty\Exception
      */
     public function setSmartyConfigure(): void
     {

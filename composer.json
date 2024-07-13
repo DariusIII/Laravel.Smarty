@@ -23,7 +23,7 @@
         "illuminate/config": "^10.0|^11.0",
         "illuminate/console": "^10.0|^11.0",
         "illuminate/events": "^10.0|^11.0",
-        "smarty/smarty": "^4.3"
+        "smarty/smarty": "^5.3"
     },
     "require-dev": {
         "predis/predis": "^2.1",

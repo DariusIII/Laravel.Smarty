@@ -23,7 +23,7 @@ namespace Ytake\LaravelSmarty;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use SmartyException;
+use Smarty\Exception;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -80,7 +80,7 @@ class SmartyServiceProvider extends ServiceProvider
     /**
      * @param Application $app
      * @return SmartyFactory
-     * @throws SmartyException
+     * @throws \Smarty\Exception
      */
     public function createSmarty(Application $app): SmartyFactory
     {
